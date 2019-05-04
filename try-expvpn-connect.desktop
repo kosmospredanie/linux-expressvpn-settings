@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Connect to ExpressVPN
+TryExec=try-expvpn-connect
+Exec=try-expvpn-connect
+Icon=network-vpn
+Terminal=false
+StartupNotify=false
+Categories=Network;
+
+X-GNOME-Autostart-Phase=Application
+X-KDE-autostart-phase=2

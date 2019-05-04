@@ -1,0 +1,29 @@
+#!/bin/bash
+set -e
+
+DNS='9.9.9.9'
+PING_TIMEOUT=3
+privileged=$([ $(id -u) -eq 0 ] && echo '' || echo 'pkexec')
+
+msg="$(expressvpn status | sed 's,\x1B\[[0-9;]*[a-zA-Z],,g')"
+if [[ $msg == Connected* ]]; then
+	loc="$(expressvpn status | sed -n 's/Connected to //p' | sed 's,\x1B\[[0-9;]*[a-zA-Z],,g')"
+	notify-send -i network-vpn -c "network" "Already connected to VPN" "Location: $loc"
+	echo "Already connected to VPN" >&2
+	echo "Location: $loc" >&2
+	exit 1
+fi
+
+if ping -c 1 -w $PING_TIMEOUT "$DNS" &>/dev/null && $privileged expvpn-connect $@; then
+	loc="$(expressvpn status | sed -n 's/Connected to //p' | sed 's,\x1B\[[0-9;]*[a-zA-Z],,g')"
+	notify-send -i network-vpn -c "network" "Connected to VPN" "Location: $loc"
+	echo "Connected to VPN"
+	echo "Location: $loc"
+else
+	msg="$(expressvpn status | sed 's,\x1B\[[0-9;]*[a-zA-Z],,g')"
+	notify-send -i network-vpn -c "network" "Failed to connect to VPN" "$msg"
+	echo "Failed to connect to VPN:" >&2
+	echo >&2
+	echo "$(expressvpn status)" >&2
+	exit 1
+fi
