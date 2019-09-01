@@ -12,4 +12,4 @@ cp expvpn-iptables-flush \
 	expvpn-connect \
 	/usr/local/bin
 cp try-expvpn-connect.desktop /usr/local/share/applications
-ln -s /usr/local/share/applications/try-expvpn-connect.desktop /etc/xdg/autostart
+ln -sf /usr/local/share/applications/try-expvpn-connect.desktop /etc/xdg/autostart
