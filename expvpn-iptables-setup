@@ -5,21 +5,7 @@ set -e
 NETDEV_PATTERN='(wl|eth|en)\w+'
 VPNDEV='tun0'
 
-# Set default rules to be DROP.
-iptables -P INPUT DROP
-iptables -P OUTPUT DROP
-iptables -P FORWARD DROP
-ip6tables -P INPUT DROP
-ip6tables -P OUTPUT DROP
-ip6tables -P FORWARD DROP
-
-# Reset all rules.
-iptables -F INPUT
-iptables -F OUTPUT
-iptables -F FORWARD
-ip6tables -F INPUT
-ip6tables -F OUTPUT
-ip6tables -F FORWARD
+expvpn-iptables-block
 
 # Allow connections on loopback interface.
 iptables -A INPUT -i lo -j ACCEPT
