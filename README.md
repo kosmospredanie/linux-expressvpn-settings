@@ -5,9 +5,9 @@ Use ExpressVPN more securely.
 This settings:
 
 1. Prevent traffic to leak when ExpressVPN tunnel is broken.
-2. Connect to ExpressVPN or block network if failed to connect on (desktop environment) startup.
+2. Connect to ExpressVPN or block network if failed to connect on session startup.
 
-Tested on Ubuntu 19.04 GNOME Shell, KDE Plasma, and elementary OS 5.0.
+Tested on GNOME Shell, KDE Plasma, Pantheon, and Deepin desktop environments.
 
 The iptables scripts are based on https://github.com/dragontortoise/expressvpn-iptables
 
