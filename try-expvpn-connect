@@ -4,7 +4,7 @@ PATH="$PATH:/usr/local/bin"
 
 DNS='9.9.9.9'
 PING_TIMEOUT=3
-STATUS_TIMEOUT=3
+STATUS_TIMEOUT=1
 privileged=$([ $(id -u) -eq 0 ] && echo '' || echo 'pkexec')
 
 msg="$(timeout $STATUS_TIMEOUT expressvpn status | sed 's,\x1B\[[0-9;]*[a-zA-Z],,g' || echo '')"
