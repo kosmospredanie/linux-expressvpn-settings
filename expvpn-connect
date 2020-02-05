@@ -7,5 +7,10 @@ if [ $(id -u) -ne 0 ]; then
 	exit 1
 fi
 
+expressvpn preferences set force_vpn_dns true
+expressvpn preferences set network_lock on
+expressvpn preferences set preferred_protocol udp
+expressvpn preferences set send_diagnostics false
+
 expressvpn connect $@
 expvpn-iptables-setup
