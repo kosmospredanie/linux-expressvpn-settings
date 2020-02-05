@@ -1,5 +1,6 @@
 #!/bin/sh
 set -e
+PATH="$PATH:/usr/local/bin"
 
 if [ $(id -u) -ne 0 ]; then
 	echo "Please run as root" >&2

@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+PATH="$PATH:/usr/local/bin"
 
 DNS='9.9.9.9'
 PING_TIMEOUT=3
