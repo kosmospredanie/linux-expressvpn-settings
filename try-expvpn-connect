@@ -9,11 +9,11 @@ privileged=$([ $(id -u) -eq 0 ] && echo '' || echo 'pkexec')
 
 msg="$(timeout $STATUS_TIMEOUT expressvpn status | sed 's,\x1B\[[0-9;]*[a-zA-Z],,g' || echo '')"
 if [[ -z "$msg" ]]; then
+	$privileged expvpn-iptables-block
 	msg="Please check the network connection"
 	notify-send -i dialog-warning -c "network" "Failed to connect to VPN" "$msg"
 	echo "Failed to connect to VPN" >&2
 	echo "$msg" >&2
-	$privileged expvpn-iptables-block
 	exit 1
 elif [[ "$msg" == Connected* ]]; then
 	loc="$(expressvpn status | sed -n 's/Connected to //p' | sed 's,\x1B\[[0-9;]*[a-zA-Z],,g')"
@@ -22,12 +22,12 @@ elif [[ "$msg" == Connected* ]]; then
 	echo "Location: $loc" >&2
 	exit 1
 elif [[ "$msg" == "Not Activated"* ]]; then
+	$privileged expvpn-iptables-block
 	msg="All network blocked to prevent traffic to leak.\nTo unblock, run 'sudo expvpn-iptables-flush'."
 	notify-send -i dialog-error -c "network" "VPN not activated!" "$msg"
 	echo "VPN not activated!" >&2
 	echo >&2
 	printf "$msg\n" >&2
-	$privileged expvpn-iptables-block
 	exit 1
 fi
 
@@ -40,19 +40,19 @@ if ping -c 1 -w $PING_TIMEOUT "$DNS" &>/dev/null; then
 		echo "Location: $loc"
 		exit
 	else
+		$privileged expvpn-iptables-block
 		msg="Please check the network connection"
 		notify-send -i dialog-warning -c "network" "Failed to connect to VPN" "$msg"
 		echo "Failed to connect to VPN" >&2
 		echo "$msg" >&2
-		$privileged expvpn-iptables-block
 		exit 1
 	fi
 else
+	$privileged expvpn-iptables-block
 	msg="$(expressvpn status | sed 's,\x1B\[[0-9;]*[a-zA-Z],,g')"
 	notify-send -i dialog-warning -c "network" "Failed to connect to VPN" "$msg"
 	echo "Failed to connect to VPN:" >&2
 	echo >&2
 	echo "$(expressvpn status)" >&2
-	$privileged expvpn-iptables-block
 	exit 1
 fi
