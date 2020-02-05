@@ -18,6 +18,12 @@ cd linux-expressvpn-settings
 sudo sh install.sh
 ```
 
+To uninstall:
+
+```sh
+sudo sh uninstall.sh
+```
+
 ## Usage
 
 ```sh
